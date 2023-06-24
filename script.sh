@@ -23,7 +23,7 @@ case "$1" in
         show_date
         ;;
     --logs)
-        create_logs
+        create_logs "$2"
         ;;
     *)
         echo "Nieznana opcja."
