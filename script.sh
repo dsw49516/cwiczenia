@@ -5,6 +5,14 @@ show_date() {
     echo "Dzisiejsza data: $current_date"
 }
 
+show_help() {
+    echo "Dostępne opcje:"
+    echo "  --date               Wyświetla dzisiejszą datę"
+    echo "  --logs               Tworzy 100 plików logx.txt, zawierających nazwę pliku, nazwę skryptu i datę"
+    echo "  --logs <liczba>      Tworzy określoną liczbę plików logx.txt, zawierających nazwę pliku, nazwę skryptu i datę"
+    echo "  --help               Wyświetla tę wiadomość"
+}
+
 create_logs() {
     local count=${1:-100}
     mkdir "logs"
@@ -25,7 +33,10 @@ case "$1" in
     --logs)
         create_logs "$2"
         ;;
+    --help)
+        show_help
+        ;;
     *)
-        echo "Nieznana opcja."
+        echo "Nieznana opcja. Użyj --help w formacie "./script.sh --help", aby wyświetlić dostępne opcje."
         ;;
 esac
