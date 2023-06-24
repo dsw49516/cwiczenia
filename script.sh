@@ -7,10 +7,10 @@ show_date() {
 
 show_help() {
     echo "Dostępne opcje:"
-    echo "  --date               Wyświetla dzisiejszą datę"
-    echo "  --logs               Tworzy 100 plików logx.txt, zawierających nazwę pliku, nazwę skryptu i datę"
-    echo "  --logs <liczba>      Tworzy określoną liczbę plików logx.txt, zawierających nazwę pliku, nazwę skryptu i datę"
-    echo "  --help               Wyświetla tę wiadomość"
+    echo "  --date, -d               Wyświetla dzisiejszą datę"
+    echo "  --logs, -l               Tworzy 100 plików logx.txt, zawierających nazwę pliku, nazwę skryptu i datę"
+    echo "  --logs <n>, -l <n>          Tworzy <n> liczbę plików logx.txt, zawierających nazwę pliku, nazwę skryptu i datę"
+    echo "  --help, -h               Wyświetla tę wiadomość"
 }
 
 create_logs() {
@@ -30,10 +30,19 @@ case "$1" in
     --date)
         show_date
         ;;
+    -d)
+        show_date
+        ;;
     --logs)
         create_logs "$2"
         ;;
+    -l)
+        create_logs "$2"
+        ;;
     --help)
+        show_help
+        ;;
+    -h)
         show_help
         ;;
     *)
