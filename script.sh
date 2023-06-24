@@ -11,6 +11,8 @@ show_help() {
     echo "  --logs, -l               Tworzy 100 plików logx.txt, zawierających nazwę pliku, nazwę skryptu i datę"
     echo "  --logs <n>, -l <n>       Tworzy <n> liczbę plików logx.txt, zawierających nazwę pliku, nazwę skryptu i datę"
     echo "  --init                   Klonuje całe repozytorium i ustawia ścieżkę w zmiennej PATH."
+    echo "  --error, -e              Tworzy 100 plików errorów"
+    echo "  --error <n>, -e <n>      Tworzy <n> plików errorów"
     echo "  --help, -h               Wyświetla tę wiadomość"
 }
 
@@ -27,18 +29,26 @@ create_logs() {
     cd ..
 }
 
-clone_repo_and_set_path() {
-    local repo_url="<adres_repozytorium>"
-    local repo_dir="repo"
-    local repo_name="<nazwa_repozytorium>"
-
-    git clone "$repo_url" "$repo_dir"
-
-    echo "export PATH=\"\$PATH:$(pwd)/$repo_dir\"" >> ~/.bashrc
-    source ~/.bashrc
-
-    echo "Repozytorium \"$repo_name\" zostało sklonowane i ścieżka została dodana do zmiennej PATH."
+create_error_files() {
+    local count=${1:-100}
+    mkdir "errors"
+    cd errors
+    for ((i = 1; i <= count; i++)); do
+        mkdir "error${i}"
+        cd error${i}
+        filename="error${i}.txt"
+        echo "Nazwa pliku: $filename" > "$filename"
+        echo "Nazwa skryptu: $0" >> "$filename"
+        echo "ERROR" >> "ERROR"
+        cd ..
+    done
+    cd ..
 }
+
+clone_repo_and_set_path() {
+    echo "currently not working"
+}
+
 
 case "$1" in
     --date)
@@ -56,6 +66,12 @@ case "$1" in
     --init)
         clone_repo_and_set_path
         ;;
+    --error)
+        create_error_files "$2"
+        ;;
+    -e)
+        create_error_files "$2"
+        ;;
     --help)
         show_help
         ;;
@@ -63,6 +79,5 @@ case "$1" in
         show_help
         ;;
     *)
-        echo "Nieznana opcja. Użyj --help w formacie "./script.sh --help", aby wyświetlić dostępne opcje."
-        ;;
+        echo "Nieznana opcja. Użyj --help w formacie ./script.sh --help, aby wyświetlić dostępne opcje."
 esac
